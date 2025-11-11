@@ -1,0 +1,512 @@
+/*
+ * s2mf301 battery device tree common
+ *
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&smd {
+	s2mf301_fuelgauge: s2mf301-fuelgauge {
+		status = "okay";
+		fuelgauge,capacity_full = <5000>;
+		fuelgauge,low_voltage_limit_lowtemp = <3100>;
+		fuelgauge,fuel_alert_soc = <1>;
+		fuelgauge,capacity_max = <1000>;
+		fuelgauge,capacity_max_margin = <200>;
+		fuelgauge,capacity_min = <0>;
+		fuelgauge,capacity_calculation_type = <28>;
+		fuelgauge,use_external_temp;
+#if 1
+		fuelgauge,bat_id_gpio = <
+				SEC_GPIO_REF(AP,gpm3,gpm3,0) 0  /* BAT_ID_1 */
+				>;
+#elif 0
+		fuelgauge,bat_id_gpio = <
+				SEC_GPIO_REF(${bat_id_gpio_02}) 0  /* BAT_ID_2 */
+				SEC_GPIO_REF(${bat_id_gpio_01}) 0  /* BAT_ID_1 */
+				>;
+#endif
+	};
+};
+
+&smd {
+	battery {
+		battery,fgsrc_switch_name = "s2mf301-fuelgauge"; /* Fuelgauge voltage source */
+	};
+};
+
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/android/kernel/kmodule/battery/suwon/fuelgauge/s2mf301/a17x/s2mf301_fuelgauge.dtsi */
+/*
+ * s2mf301 battery device tree common
+ *
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&smd {
+	s2mf301_fuelgauge: s2mf301-fuelgauge {
+		status = "okay";
+		fuelgauge,capacity_full = <5000>;
+		fuelgauge,low_voltage_limit_lowtemp = <3100>;
+		fuelgauge,fuel_alert_soc = <1>;
+		fuelgauge,capacity_max = <1000>;
+		fuelgauge,capacity_max_margin = <200>;
+		fuelgauge,capacity_min = <0>;
+		fuelgauge,capacity_calculation_type = <28>;
+		fuelgauge,use_external_temp;
+		/* zadj data [0x12] [0x13] [0x15] */
+		fuelgauge1,zadj_data = <
+			/* zadj data for 4.45 */
+			3 1 254
+			/* zadj data for 4.43 */
+			0 0 0
+			/* zadj data for 4.41 */
+			0 0 0
+			/* zadj data for 4.39 */
+			0 0 0
+			/* zadj data for 4.34 */
+			0 0 0
+			>;
+		fuelgauge0,zadj_data = <
+			/* zadj data for 4.45 */
+			3 2 1
+			/* zadj data for 4.43 */
+			0 0 0
+			/* zadj data for 4.41 */
+			0 0 0
+			/* zadj data for 4.39 */
+			0 0 0
+			/* zadj data for 4.34 */
+			0 0 0
+			>;
+		fuelgauge,bat_id_cutoff_level = <3400 3400>;
+
+#if 0
+		fuelgauge,bat_id_gpio = <
+				SEC_GPIO_REF(${bat_id_gpio_02}) 0  /* BAT_ID_2 */
+				SEC_GPIO_REF(${bat_id_gpio_01}) 0  /* BAT_ID_1 */
+				>;
+#endif
+	};
+};
+
+&smd {
+	battery {
+		battery,fgsrc_switch_name = "s2mf301-fuelgauge"; /* Fuelgauge voltage source */
+	};
+};
+
+&smd {
+	s2mf301_battery_params: battery_params {
+	/*
+	 * BAT_ID_1
+	 * 1: ATL_safe, normal
+	 * 0: SDI, BYD
+	 */
+
+	/* 1: ATL_safe */
+		battery1,battery_data = <
+			/***** battery data for 4.45 *****/
+			/* battery,battery_table3 */
+			78 11 222 10 108 10 241 9 117 9
+			255 8 144 8 43 8 206 7 76 7
+			252 6 195 6 149 6 112 6 81 6
+			37 6 246 5 181 5 139 5 224 4
+			75 1 0 0 0 8 153 7 51 7
+			205 6 102 6 0 6 153 5 51 5
+			204 4 102 4 255 3 153 3 50 3
+			204 2 101 2 255 1 152 1 50 1
+			203 0 101 0 28 0 245 15
+
+			/* battery,battery_table4 */
+			14 14 14 14 28 27 27 27 27 28
+			28 28 28 29 29 29 29 29 29 30
+			52 154
+
+			/* battery,batcap */
+			0x18 0x4e 0xb8 0xb /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x18 0x4e /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x19 0x4e /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			10000 9497 8999 8500 7998 7500 6997 6499 5996 5498
+			4995 4497 3994 3496 2993 2495 1992 1494 991 493
+			136 (-53)
+
+			/* battery,ocv_arr_val */
+			44130 43583 43027 42426 41821 41245 40703 40209 39755 39121
+			38730 38452 38227 38046 37895 37680 37451 37133 36928 36093
+			31616 30000
+
+			/* battery,rRS_CC0 */
+			0x15 /* [0x5C] */
+
+			/***** battery data for 4.43 *****/
+			/* battery,battery_table3 */
+			190 11 78 11 222 10 108 10 241 9
+			117 9 254 8 144 8 43 8 206 7
+			76 7 252 6 195 6 149 6 112 6
+			81 6 37 6 245 5 181 5 140 5
+			224 4 75 1 138 8 30 8 179 7
+			72 7 221 6 114 6 7 6 156 5
+			49 5 198 4 91 4 239 3 132 3
+			25 3 174 2 67 2 216 1 109 1
+			2 1 151 0 43 0 223 15
+
+			/* battery,battery_table4 */
+			14 14 14 14 14 27 27 27 27 28
+			28 28 28 29 29 29 29 29 29 30
+			30 154
+
+			/* battery,batcap */
+			0x84 0x4a 0xb4 0xc /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x84 0x4a /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x85 0x4a /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			10672 10149 9626 9103 8580 8057 7534 7011 6488 5965
+			5442 4919 4396 3873 3350 2827 2304 1781 1258 735
+			212 (-160)
+
+			/* battery,ocv_arr_val */
+			44677 44130 43583 43027 42426 41822 41243 40701 40209 39755
+			39120 38729 38453 38230 38048 37897 37679 37449 37132 36931
+			36096 31614
+
+			/* battery,rRS_CC0 */
+			0x15 /* [0x5C] */
+
+			/***** battery data for 4.41 *****/
+			/* battery,battery_table3 */
+			190 11 78 11 222 10 108 10 241 9
+			117 9 254 8 144 8 43 8 206 7
+			76 7 252 6 195 6 149 6 112 6
+			81 6 37 6 245 5 181 5 140 5
+			224 4 75 1 180 8 71 8 218 7
+			109 7 255 6 146 6 37 6 184 5
+			75 5 221 4 112 4 3 4 150 3
+			41 3 187 2 78 2 225 1 116 1
+			7 1 153 0 44 0 223 15
+
+			/* battery,battery_table4 */
+			14 14 14 14 14 27 27 27 27 28
+			28 28 28 29 29 29 29 29 29 30
+			30 154
+
+			/* battery,batcap */
+			0x18 0x49 0x76 0xc  /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x18 0x49 /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x19 0x49 /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			10880 10347 9814 9281 8747 8214 7681 7148 6614 6081
+			5548 5015 4482 3948 3415 2882 2349 1815 1282 749
+			216 (-163)
+
+			/* battery,ocv_arr_val */
+			44677 44130 43583 43027 42426 41822 41243 40701 40209 39755
+			39120 38729 38453 38230 38048 37897 37679 37449 37132 36931
+			36096 31614
+
+			/* battery,rRS_CC0 */
+			0x15 /* [0x5C] */
+
+			/***** battery data for 4.39 *****/
+			/* battery,battery_table3 */
+			190 11 78 11 222 10 108 10 241 9
+			117 9 254 8 144 8 43 8 206 7
+			76 7 252 6 195 6 149 6 112 6
+			81 6 37 6 245 5 181 5 140 5
+			224 4 75 1 227 8 116 8 4 8
+			149 7 37 7 182 6 70 6 215 5
+			103 5 248 4 136 4 25 4 169 3
+			58 3 202 2 91 2 235 1 124 1
+			12 1 157 0 45 0 222 15
+
+			/* battery,battery_table4 */
+			14 14 14 14 14 27 27 27 27 28
+			28 28 28 29 29 29 29 29 29 30
+			30 154
+
+			/* battery,batcap */
+			0x94 0x47 0x34 0xc /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x94 0x47 /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x95 0x47 /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			11109 10564 10020 9476 8931 8387 7843 7298 6754 6209
+			5665 5120 4576 4031 3487 2942 2398 1854 1309 765
+			221 (-166)
+
+			/* battery,ocv_arr_val */
+			44677 44130 43583 43027 42426 41822 41243 40701 40209 39755
+			39120 38729 38453 38230 38048 37897 37679 37449 37132 36931
+			36096 31614
+
+			/* battery,rRS_CC0 */
+			0x15 /* [0x5C] */
+
+			/***** battery data for 4.34 *****/
+			/* battery,battery_table3 */
+			190 11 78 11 222 10 108 10 241 9
+			117 9 254 8 144 8 43 8 206 7
+			76 7 252 6 195 6 149 6 112 6
+			81 6 37 6 245 5 181 5 140 5
+			224 4 75 1 82 9 221 8 104 8
+			243 7 126 7 9 7 148 6 31 6
+			171 5 54 5 193 4 76 4 215 3
+			98 3 237 2 120 2 3 2 142 1
+			25 1 164 0 47 0 220 15
+
+			/* battery,battery_table4 */
+			14 14 14 14 14 14 27 27 27 28
+			28 28 28 29 29 29 29 29 29 30
+			30 154
+
+			/* battery,batcap */
+			0x40 0x44 0xa3 0xb /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x40 0x44 /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x41 0x44 /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			11650 11079 10508 9938 9367 8796 8225 7654 7083 6512
+			5941 5370 4799 4228 3657 3086 2515 1944 1373 802
+			232 (-174)
+
+			/* battery,ocv_arr_val */
+			44677 44130 43583 43027 42426 41822 41243 40701 40209 39755
+			39120 38729 38453 38230 38048 37897 37679 37449 37132 36931
+			36096 31614
+
+			/* battery,rRS_CC0 */
+			0x15 /* [0x5C] */
+
+			>;
+	/* 0: SDI */
+		battery0,battery_data = <
+			/***** battery data for 4.45 *****/
+			/* battery,battery_table3 */
+			188 11 73 11 214 10 96 10 227 9
+			102 9 238 8 127 8 24 8 179 7
+			53 7 235 6 179 6 134 6 98 6
+			64 6 13 6 224 5 153 5 128 5
+			40 4 74 1 103 8 0 8 153 7
+			51 7 204 6 102 6 255 5 152 5
+			50 5 203 4 101 4 254 3 151 3
+			49 3 202 2 100 2 253 1 150 1
+			48 1 201 0 98 0 247 15
+
+			/* battery,battery_table4 */
+			16 16 16 16 31 31 31 30 30 30
+			31 31 31 31 31 32 32 32 33 34
+			36 81
+
+			/* battery,batcap */
+			0xf0 0x4b 0xb8 0xb /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0xf0 0x4b /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0xf1 0x4b /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			10502 10000 9497 8999 8496 7998 7495 6992 6494 5991
+			5493 4990 4487 3989 3486 2988 2485 1982 1484 981
+			478 (-43)
+
+			/* battery,ocv_arr_val */
+			44667 44106 43544 42968 42358 41748 41162 40620 40117 39624
+			39008 38647 38374 38154 37978 37812 37563 37343 36997 36875
+			35195 31611
+
+			/* battery,rRS_CC0 */
+			0x17 /* [0x5C] */
+
+			/***** battery data for 4.43 *****/
+			/* battery,battery_table3 */
+			188 11 73 11 214 10 96 10 227 9
+			102 9 238 8 127 8 24 8 179 7
+			53 7 235 6 179 6 134 6 98 6
+			64 6 13 6 224 5 153 5 128 5
+			40 4 74 1 136 8 28 8 177 7
+			69 7 217 6 109 6 1 6 149 5
+			41 5 190 4 82 4 230 3 122 3
+			14 3 162 2 54 2 203 1 95 1
+			243 0 135 0 27 0 233 15
+
+			/* battery,battery_table4 */
+			16 16 16 16 31 31 31 30 30 30
+			31 31 31 31 31 32 32 32 33 34
+			36 81
+
+			/* battery,batcap */
+			0xe4 0x4a 0xb8 0xb /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0xe4 0x4a /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0xe5 0x4a /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			10664 10136 9614 9086 8559 8032 7504 6977 6450 5927
+			5400 4873 4345 3818 3291 2763 2241 1713 1186 659
+			131 (-112)
+
+			/* battery,ocv_arr_val */
+			44667 44106 43544 42968 42358 41748 41162 40620 40117 39624
+			39008 38647 38374 38154 37978 37812 37563 37343 36997 36875
+			35195 31611
+
+			/* battery,rRS_CC0 */
+			0x8 /* [0x5C] */
+
+			/***** battery data for 4.41 *****/
+			/* battery,battery_table3 */
+			188 11 73 11 214 10 96 10 227 9
+			102 9 238 8 127 8 24 8 179 7
+			53 7 235 6 179 6 134 6 98 6
+			64 6 13 6 224 5 153 5 128 5
+			40 4 74 1 184 8 74 8 220 7
+			110 7 255 6 145 6 35 6 181 5
+			70 5 216 4 106 4 252 3 141 3
+			31 3 177 2 67 2 212 1 102 1
+			248 0 138 0 28 0 232 15
+
+			/* battery,battery_table4 */
+			16 16 16 16 31 31 31 30 30 30
+			31 31 31 31 31 32 32 32 33 34
+			36 81
+
+			/* battery,batcap */
+			0x48 0x49 0xb8 0xb  /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x48 0x49 /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x49 0x49 /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			10898 10361 9824 9287 8745 8208 7670 7133 6591 6054
+			5517 4980 4438 3901 3364 2827 2285 1748 1210 673
+			136 (-117)
+
+			/* battery,ocv_arr_val */
+			44667 44106 43544 42968 42358 41748 41162 40620 40117 39624
+			39008 38647 38374 38154 37978 37812 37563 37343 36997 36875
+			35195 31611
+
+			/* battery,rRS_CC0 */
+			0x8 /* [0x5C] */
+
+			/***** battery data for 4.39 *****/
+			/* battery,battery_table3 */
+			188 11 73 11 214 10 96 10 227 9
+			102 9 238 8 127 8 24 8 179 7
+			53 7 235 6 179 6 134 6 98 6
+			64 6 13 6 224 5 153 5 128 5
+			40 4 74 1 234 8 121 8 9 8
+			152 7 39 7 183 6 70 6 213 5
+			101 5 244 4 131 4 18 4 162 3
+			49 3 192 2 80 2 223 1 110 1
+			254 0 141 0 28 0 232 15
+
+			/* battery,battery_table4 */
+			16 16 16 16 31 31 31 30 30 30
+			31 31 31 31 31 32 32 32 33 34
+			36 81
+
+			/* battery,batcap */
+			0xac 0x47 0xb8 0xb /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0xac 0x47 /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0xad 0x47 /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			11142 10590 10043 9492 8940 8393 7841 7290 6743 6191
+			5639 5087 4541 3989 3437 2890 2338 1787 1240 688
+			136 (-117)
+
+			/* battery,ocv_arr_val */
+			44667 44106 43544 42968 42358 41748 41162 40620 40117 39624
+			39008 38647 38374 38154 37978 37812 37563 37343 36997 36875
+			35195 31611
+
+			/* battery,rRS_CC0 */
+			0x8 /* [0x5C] */
+
+			/***** battery data for 4.34 *****/
+			/* battery,battery_table3 */
+			188 11 73 11 214 10 96 10 227 9
+			102 9 238 8 127 8 24 8 179 7
+			53 7 235 6 179 6 134 6 98 6
+			64 6 13 6 224 5 153 5 128 5
+			40 4 74 1 85 9 223 8 105 8
+			243 7 125 7 7 7 145 6 27 6
+			165 5 47 5 185 4 67 4 205 3
+			87 3 225 2 107 2 245 1 127 1
+			9 1 147 0 29 0 230 15
+
+			/* battery,battery_table4 */
+			16 16 16 16 31 31 31 30 30 30
+			31 31 31 31 31 32 32 32 33 34
+			36 81
+
+			/* battery,batcap */
+			0x78 0x44 0xb8 0xb /* [0x0E] [0x0F] [0x10] [0x11] */
+
+			/* battery,designcap */
+			0x78 0x44 /* [0x86~0x87] */
+
+			/* battery,batcap_ocv_new */
+			0x79 0x44 /* 0x90~0x91 */
+
+			/* battery,soc_arr_val */
+			11665 11088 10512 9936 9360 8784 8208 7631 7055 6479
+			5903 5327 4750 4174 3598 3022 2446 1870 1293 717
+			141 (-126)
+
+			/* battery,ocv_arr_val */
+			44667 44106 43544 42968 42358 41748 41162 40620 40117 39624
+			39008 38647 38374 38154 37978 37812 37563 37343 36997 36875
+			35195 31611
+
+			/* battery,rRS_CC0 */
+			0x8 /* [0x5C] */
+			>;
+	};
+};
